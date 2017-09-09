@@ -1,10 +1,10 @@
+require("dotenv").config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 //const db = require('./dbconfig.js')
 
-//const mongoURI = process.env.MONGO_URI;
-const mongoURI = "mongodb://pj26:awash1991@ds157320.mlab.com:57320/basketballtraining";
+const mongoURI = process.env.MONGO_URI;
 const mongoose = require("mongoose");
 mongoose.Promise = require('bluebird');
 
@@ -34,10 +34,11 @@ app.get('/', (req, res) => {
 app.post('/', (req,res) => {
   console.log("Post Worked");
   insertSession({ name: req.body.name, type: req.body.type, duration: req.body.duration });
+  res.redirect('/')
 })
 
-app.listen('8080', () => {
-  console.log(`Listening on 8080`);
+app.listen(process.env.PORT, () => {
+  console.log(`Listening on ${process.env.PORT}`);
 })
 
 console.log("Node working")
