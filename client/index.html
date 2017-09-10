@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app='basketballTrainingApp' lang="en">
 
 <head>
   <meta charset="UTF-8">
   <title>Basketball Training App</title>
-  <script src="/bower_components/angular/angular.js"></script>
+  <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="src/app.js"></script>
+  <script src="src/session-list.component.js"></script>
+  <script src="src/add-session.component.js"></script>
+  <script src="src/styles.css"></script>
 </head>
-
-<body> Lets Train!!
-  <app ng-app='my app'
-<form action="/" method="POST">
-  <input type="text" placeholder="name" name="name"> 
-  <input type="text" placeholder="training type" name="type">
-  <input type="text" placeholder="duration" name="duration">
-  <button type="submit">Submit</button>
-</form>
+<body> 
+  <h1>Basketball Training App</h1>
+    <add-session></add-session>
+    <session-list></session-list>
 </body>
-
 </html>

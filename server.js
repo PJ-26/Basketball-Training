@@ -25,6 +25,8 @@ const insertSession = session =>
   (new Session(session)).save( (err, newSession) => 
     console.log(err || newSession));
 
+
+app.use(express.static("./client"));
 app.use(bodyParser.urlencoded({extended: true}));
 
 app.get('/', (req, res) => {
@@ -33,8 +35,7 @@ app.get('/', (req, res) => {
 
 app.post('/', (req,res) => {
   console.log("Post Worked");
-  insertSession({ name: req.body.name, type: req.body.type, duration: req.body.duration });
-  res.redirect('/')
+  insertSession({ type: req.body.type, name: req.body.name, duration: req.body.duration });
 })
 
 app.listen(process.env.PORT, () => {
