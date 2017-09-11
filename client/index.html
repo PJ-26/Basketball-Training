@@ -1,20 +1,74 @@
 <!DOCTYPE html>
-<html ng-app='basketballTrainingApp' lang="en">
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <title>Basketball Training App</title>
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
   <script src="bower_components/angular/angular.js"></script>
-  <script src="src/app.js"></script>
-  <script src="src/session-list.component.js"></script>
-  <script src="src/add-session.component.js"></script>
-  <script src="src/styles.css"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="angular-youtube-embed.js"></script>
 </head>
-<body> 
+<body ng-app='basketballTrainingApp' ng-controller='mainCtrl'>   
   <h1>Basketball Training App</h1>
-    <add-session></add-session>
-    <session-list></session-list>
-</body>
-</html>
+    <divclass='container'>
+      <div class="jumbotron text-center">
+        <h3>My Sessions<span class="label label-info">{{ userSessions.length }}</span></h3>
+      </div>
+    </div>
+    <div id="session-list" class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <div class="checkbox" ng-repeat="session in userSessions">
+          <label>
+            <input type="checkbox" ng-click="removeSession(session._id)"> {{ userSession.name }}
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <div id='session-form' class='row'>
+      <div class='col-sm-8 col-sm-offset-2 text-center'>
+        <form>
+          <div>
+            <input type="text" placeholder="Drill Type" ng-model='formData.type'>
+            <input type="text" placeholder="Drill Name" ng-model="formData.name">
+            <input type="text" placeholder="Your time" ng-model="formData.duration">
+
+          </div >
+            <button type="submit" ng-click='addUserSession()'>Add Session</button>
+          
+        </form>
+
+      </div>
+      </div>
+
+      <div ng-app='youTubeCtrl' ng-controller='main'>
+        <youtube-video video-id="theBestVideo"></youtube-video>
+      </div>
+  </body>
+  </html>
+
+
+    <!-- <script type="text/ng-template" id='/addsessions.html'>
+      <form ng-submit="addUserSession()" action="/" method="POST">
+        <input type="text" ng-model="drillType" placeholder="Drill Type" name="type">
+        <input type="text" ng-model="drillName" placeholder="Drill Name" name="name">
+        <input type="text" ng-model="drillDuration" placeholder="Your time" name="duration">
+        <button type="submit">Add Session</button>
+      </form>
+      <br>
+      <div ng-repeat="userSession in userSessions">
+        <input type="checkbox" ng-model="userSession.sucess">
+        <span ng-bind="userSession.type"></span>
+        <span ng-bind="userSession.name"></span>
+        <span ng-bind="userSession.duration"></span>
+      </div>
+      <p><button ng-click="removeSession()">Remove</button></p>
+      <br>
+      <div>
+        <span class='sessionTypes' ng-repeat="session in $ctrl.sessions">{{session.type}}</span>
+      </div>
+    </script> -->
+
