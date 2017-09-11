@@ -1,58 +1,66 @@
 angular
-  .module('basketballTrainingApp', ['sessionCtrl', 'sessionService']);
-
+  .module('basketballTrainingApp', ['sessionCtrl', 'sessionService'])
+ 
 angular.module('sessionService', [])
   .factory("Sessions", function($http) {
     return {
       get: function() {
-        return $http.get('/');
+        return $http.get('/sessions');
       },
       create: function() {
-        return $http.post('/', sessionData);
+        return $http.post('/sessions', sessionData);
       },
       delete: function(id) {
-        return $http.delete('/' + id);
+        return $http.delete('/sessions/' + id);
       }
     }
   });
   
-angular.module('sessionCtrl', [])
+angular.module('sessionCtrl', ["ngYoutubeEmbed"])
   .controller("mainCtrl", function($scope, $http) {
-    $scope.formData = {};
-    
-    $http.get('/')
+
+    $scope.videoURL = "https://www.youtube.com/watch?v=bnjed9YVCRs";
+
+
+    $http.get('/sessions')
       .then(data => {
-        console.log(data);
-        $scope.userSessions = data;
+        console.log(data.data);
+        $scope.userSessions = data.data;
       },(data, status) => {
         console.log(data, status);
       })
     
 
     $scope.addUserSession = () => {
-      $http.post('/', $scope.formData)
+      $http.post('/sessions', $scope.formData)
           .then((data) => {
-            $scope.formData = {};
-            $scope.formData = data;
+            $scope.formData = data.data;
+            console.log($scope.formData);
+            $http.get("/sessions").then(data => {
+                $scope.userSessions = data.data;
+              }, (data, status) => {
+                console.log(data, status);
+              });
           }, data => {
-            console.error(error);
+            if(error) console.error(error);
+            else $scope.formData = {};
           });
       };
 
       $scope.removeSession = function(id) {
-        $http.delete('/' + id)
+        $http.delete('/sessions/' + id)
           .then(data => {
-            $scope.userSessions = data;
+            $scope.userSessions = data.data;
           }, data => {
             console.error(data)
           })
       }; 
     });
   
-  angular.module('youTubeCtrl', ['youtube-embed'])
-    .controller('main', function($scope) {
-      $scope.theBestVideo = "sMKoNBRZM1M";
-    })
+  // angular.module('youTubeCtrl', ['youtube-embed'])
+  //   .controller('main', function($scope) {
+  //     $scope.theBestVideo = "sMKoNBRZM1M";
+  //   })
         // let oldSessions = $scope.userSessions;
         // $scope.userSessions = [];
         // angular.forEach(oldSessions, session => {

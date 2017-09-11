@@ -8,10 +8,11 @@ require("dotenv").config();
 const port = process.env.PORT;
 const mongoURI = process.env.MONGO_URI;
 mongoose.Promise = require("bluebird");
-// app.use(express.static(__dirname + "/public"));
+
+app.use(express.static(path.join(__dirname, "client")));
+
 app.use(bodyParser.urlencoded({ 'extended': 'true' }));
 app.use(bodyParser.json());
-app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 mongoose.connect(mongoURI, {useMongoClient: true})
   .then(({db: {databaseName}}) => console.log(`Connected to ${databaseName}`))
   .catch((err => console.error(err)));
@@ -38,7 +39,7 @@ let session = new Session({type:'Shooting', name:'Around the World', duration:'3
 
 session.save( (err) => console.log(err || session));
 
-app.get('/', (req, res) => { 
+app.get('/sessions', (req, res) => { 
   console.log('GET WORKED');
   Session.find( (err, sessions) => {
     if (err) console.error(err)
@@ -46,7 +47,7 @@ app.get('/', (req, res) => {
   })
 });
 
-app.post('/', (req,res) => {
+app.post('/sessions', (req,res) => {
   console.log("Post Worked");
   
   Session.create({ type: req.body.type, name: req.body.name,
@@ -62,8 +63,9 @@ app.post('/', (req,res) => {
   })
 })
 
-app.delete('/:session_id', (req, res) => {
-  Session.remove({_id:req.params.todo_id}, (err, session) => {
+app.delete('/sessions/:session_id', (req, res) => {
+  console.log(req.data);
+  Session.remove({_id:req.params.session_id}, (err, session) => {
     if(err) console.error(err);
     else {
       console.log("DELETED");
@@ -77,7 +79,7 @@ app.delete('/:session_id', (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log(`Listening on ${process.env.PORT}`);
-})
+});
 
 console.log("Node working")
 

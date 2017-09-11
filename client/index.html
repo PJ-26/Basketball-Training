@@ -7,12 +7,14 @@
   <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
   <script src="bower_components/angular/angular.js"></script>
   <script src="bower_components/angular-route/angular-route.js"></script>
-  <script src="app.js"></script>
+  <script src="https://cdn.jsdelivr.net/angular.youtube-embed/1.7.10/ng-youtube-embed.min.js"></script>
+    <script src="app.js"></script>
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="angular-youtube-embed.js"></script>
 </head>
+
 <body ng-app='basketballTrainingApp' ng-controller='mainCtrl'>   
-  <h1>Basketball Training App</h1>
+  <h1 class="text-center">Basketball Training App</h1>
     <divclass='container'>
       <div class="jumbotron text-center">
         <h3>My Sessions<span class="label label-info">{{ userSessions.length }}</span></h3>
@@ -22,7 +24,7 @@
       <div class="col-sm-4 col-sm-offset-4">
         <div class="checkbox" ng-repeat="session in userSessions">
           <label>
-            <input type="checkbox" ng-click="removeSession(session._id)"> {{ userSession.name }}
+            <input type="checkbox" ng-click="removeSession(session._id)"> {{session.type}}.....{{session.name}}.....{{session.duration}}
           </label>
         </div>
       </div>
@@ -41,12 +43,17 @@
           
         </form>
 
-      </div>
+     
+      <div>
+        <h4>Dribbling</h4>
+        <ng-youtube-embed listtype=search list=basketballdribblingdrills width=50% autoplay="false" disablekb="true" modestbranding='true'></ng-youtube-embed>
+        <h4>Shooting</h4>
+        <ng-youtube-embed listtype=search list=basketballshootingdrills width=50% autoplay="false"  disablekb="true" modestbranding='true'></ng-youtube-embed>
+        <h4>Passing</h4>
+        <ng-youtube-embed listtype=search list=basketballpassingdrills width=50% autoplay="false"   disablekb="true" modestbranding='true'></ng-youtube-embed>
       </div>
 
-      <div ng-app='youTubeCtrl' ng-controller='main'>
-        <youtube-video video-id="theBestVideo"></youtube-video>
-      </div>
+        
   </body>
   </html>
 
